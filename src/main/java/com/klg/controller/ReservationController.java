@@ -31,11 +31,6 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservationsForTenant(tenantName));
     }
 
-    @GetMapping(path = "")
-    public List<Reservation> getReservations()  {
-        return reservationService.getReservations();
-    }
-
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateService (@PathVariable Long id,@RequestBody ReservationDto reservationDto) {
         return ResponseEntity.ok(reservationService.updateReservation(id, reservationDto));

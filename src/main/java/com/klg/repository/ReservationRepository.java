@@ -17,9 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
     @Query(value = "SELECT * FROM Reservations r " +
             "WHERE r.id_rent_object = :id_rent_object " +
-            "AND (:start_date BETWEEN r.start_date AND r.end_date " +
-            "OR :end_date BETWEEN r.start_date AND r.end_date " +
-            "OR ( :start_date < r.start_date AND :end_date > r.end_date))",
+            "AND r.start_date < :end_date AND r.end_date > :start_date ",
             nativeQuery = true)
     List<Reservation> checkReservations(
             @Param("end_date") Date endDate, @Param("start_date") Date startDate, @Param("id_rent_object") Long idRentObject);

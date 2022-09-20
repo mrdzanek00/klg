@@ -12,18 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-@ActiveProfiles("test")
 class ReservationRepositoryTest {
-
-
 
     @Autowired
     private ReservationService reservationService;
@@ -39,15 +37,37 @@ class ReservationRepositoryTest {
     @Test
     public void shouldAddReservation() {
 
-        ReservationDto reservation = ReservationDto.builder()
+        List<ReservationDto> reservationDtoList = new ArrayList<>();
+
+        reservationDtoList.add(ReservationDto.builder()
                 .startDate(Date.valueOf("2022-10-01"))
                 .endDate(Date.valueOf("2022-10-11"))
                 .rentObjectId(1L)
                 .tenantId(1L)
-                .build();
+                .build());
 
-        Long reservationId =  reservationService.addReservation(reservation).getIdReservation();
-        Assertions.assertEquals(reservation.getStartDate(),reservationRepository.findById(reservationId).get().getStartDate());
+        reservationDtoList.add(ReservationDto.builder()
+                .startDate(Date.valueOf("2022-09-01"))
+                .endDate(Date.valueOf("2022-09-11"))
+                .rentObjectId(1L)
+                .tenantId(1L)
+                .build());
+
+        reservationDtoList.add(ReservationDto.builder()
+                .startDate(Date.valueOf("2022-11-01"))
+                .endDate(Date.valueOf("2022-11-11"))
+                .rentObjectId(1L)
+                .tenantId(1L)
+                .build());
+
+
+        Assertions.assertEquals(reservationDtoList.get(0).getStartDate(),
+                reservationRepository.findById(reservationService.addReservation(reservationDtoList.get(0)).getIdReservation()).get().getStartDate());
+        Assertions.assertEquals(reservationDtoList.get(1).getStartDate(),
+                reservationRepository.findById(reservationService.addReservation(reservationDtoList.get(1)).getIdReservation()).get().getStartDate());
+        Assertions.assertEquals(reservationDtoList.get(2).getStartDate(),
+                reservationRepository.findById(reservationService.addReservation(reservationDtoList.get(2)).getIdReservation()).get().getStartDate());
+
     }
 
     @Test
@@ -66,6 +86,28 @@ class ReservationRepositoryTest {
                 .rentObjectId(1L)
                 .tenantId(1L)
                 .build()));
+
+        Assertions.assertThrows(ReservationException.class, () -> reservationService.addReservation(ReservationDto.builder()
+                .startDate(Date.valueOf("2022-01-04"))
+                .endDate(Date.valueOf("2022-01-11"))
+                .rentObjectId(1L)
+                .tenantId(1L)
+                .build()));
+
+        Assertions.assertThrows(ReservationException.class, () -> reservationService.addReservation(ReservationDto.builder()
+                .startDate(Date.valueOf("2022-01-01"))
+                .endDate(Date.valueOf("2022-01-17"))
+                .rentObjectId(1L)
+                .tenantId(1L)
+                .build()));
+
+        Assertions.assertThrows(ReservationException.class, () -> reservationService.addReservation(ReservationDto.builder()
+                .startDate(Date.valueOf("2022-01-11"))
+                .endDate(Date.valueOf("2022-01-17"))
+                .rentObjectId(1L)
+                .tenantId(1L)
+                .build()));
+
     }
 
     @Test
@@ -90,8 +132,6 @@ class ReservationRepositoryTest {
                 .build()));
     }
 
-
-
     @Test
     public void shouldUpdateReservation() {
 
@@ -115,8 +155,6 @@ class ReservationRepositoryTest {
 
 
     }
-
-
 
    @Test
     public void shouldNotUpdateReservationBecauseOfWrongReservationId() {

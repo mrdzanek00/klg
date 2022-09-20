@@ -9,9 +9,6 @@ public class KlgApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KlgApplication.class, args);
 
-
-
-
 	}
 
 }

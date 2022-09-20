@@ -69,10 +69,6 @@ public class ReservationService {
 
     }
 
-    public List<Reservation> getReservations(){
-        return reservationRepository.findAll();
-    }
-
     private Boolean checkAvability(Date startDate, Date endDate, Long idObject){
 
         List<Reservation> reservations = reservationRepository.checkReservations(
