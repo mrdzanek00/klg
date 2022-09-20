@@ -1,0 +1,20 @@
+INSERT INTO OWNERS(NAME)
+VALUES ('Mateusz Rdzanek'),
+       ('Andrzej Nowak'),
+       ('Jakub Kowalski');
+
+INSERT INTO TENANTS(NAME)
+VALUES ('Jan Kowalski'),
+       ('Mateusz Nowak'),
+       ('Daniel Kowalczyk');
+
+INSERT INTO RENT_OBJECTS( NAME, ID_OWNER, PRICE_FOR_DAY, SIZE, DESCRIPTION) VALUES ('Mieszkanie1', 1, 200, 35, 'apartament');
+INSERT INTO RENT_OBJECTS( NAME, ID_OWNER, PRICE_FOR_DAY, SIZE, DESCRIPTION) VALUES ('Mieszkanie2', 2, 300, 55, 'apartament');
+INSERT INTO RENT_OBJECTS( NAME, ID_OWNER, PRICE_FOR_DAY, SIZE, DESCRIPTION) VALUES ('Mieszkanie3', 3, 600, 75, 'apartament');
+
+INSERT INTO RESERVATIONS (START_DATE, END_DATE, ID_TENANT, ID_RENT_OBJECT,COST) VALUES ('2022-09-01', '2022-09-30', 1, 1,5800);
+
+
+
+
+
